@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ShipReady
 
-## Getting Started
+ShipReady is a frontend release-readiness application built with Next.js.
 
-First, run the development server:
+The product goal is to help a Frontend Engineer or Tech Lead answer:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> Is this frontend release ready to ship?
+
+At the current stage, the repository contains the production-style project bootstrap, local quality checks, CI, Vercel Production deployment, and Preview deployments for pull requests.
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- npm
+- Vitest
+- React Testing Library
+- GitHub Actions
+- Vercel
+
+## Requirements
+
+Node.js version:
+
+```text
+24.20.0
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The expected version is pinned in `.nvmrc`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies:
 
-## Learn More
+```powershell
+npm ci
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```powershell
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open:
 
-## Deploy on Vercel
+```text
+http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Quality Checks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lint:
+
+```powershell
+npm run lint
+```
+
+Typecheck:
+
+```powershell
+npm run typecheck
+```
+
+Tests:
+
+```powershell
+npm run test
+```
+
+Production build:
+
+```powershell
+npm run build
+```
+
+## CI
+
+GitHub Actions runs on:
+
+- pushes to `main`
+- pull requests targeting `main`
+
+The CI pipeline runs:
+
+```text
+npm ci
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+```
+
+The `main` branch is protected and requires the `quality` status check to pass before merge.
+
+## Deployment
+
+Vercel is connected to the GitHub repository.
+
+- `main` -> Production
+- pull requests / branches -> Preview deployments
+
+## Git Workflow
+
+```text
+task
+|
+v
+branch
+|
+v
+implementation
+|
+v
+tests
+|
+v
+pull request
+|
+v
+CI
+|
+v
+Preview
+|
+v
+merge
+```
+
+`main` is the technical source of truth for production code.
